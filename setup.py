@@ -2,22 +2,20 @@
 
 from setuptools import setup
 from distutils.extension import Extension
-from Pyrex.Distutils import build_ext
+from Cython.Build import cythonize
 
 setup(
     name="PyHesiod",
-    version="0.2.10",
+    version="0.2.11",
     description="PyHesiod - Python bindings for the Heisod naming library",
     author="Evan Broder",
     author_email="broder@mit.edu",
     url="http://ebroder.net/code/PyHesiod",
     license="MIT",
-    requires=['Pyrex'],
     py_modules=['hesiod'],
-    ext_modules=[
+    ext_modules=cythonize([
         Extension("_hesiod",
                   ["_hesiod.pyx"],
-                  libraries=["hesiod"])
-        ],
-    cmdclass= {"build_ext": build_ext}
+                  libraries=["hesiod"]),
+    ]),
 )
